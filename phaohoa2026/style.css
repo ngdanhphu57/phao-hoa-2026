@@ -1,0 +1,179 @@
+:root {
+    --text-shadow-color: rgba(255, 255, 255, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #050505;
+    /* Deep black */
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+/* Số 5 cũ */
+.old-five {
+    position: relative;
+    /* Added as per instruction */
+    display: block;
+    /* Flex item thì block hay inline-block đều được */
+    transition: all 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    /* Easing bay cho mượt */
+    will-change: transform, opacity;
+    /* Added as per instruction */
+}
+
+/* Class kích hoạt bay đi */
+.old-five.fly-away {
+    transform: translate(10vw, -50vh) rotate(720deg) scale(0);
+    /* Updated as per instruction */
+    opacity: 0 !important;
+    /* Added as per instruction */
+}
+
+/* Nebula Background Effect */
+.nebula {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(20, 0, 40, 0.4), transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(0, 20, 40, 0.3), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(40, 0, 20, 0.3), transparent 60%);
+    filter: blur(30px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* =========================================
+   INTRO ANIMATION
+   ========================================= */
+#intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    pointer-events: none;
+    /* Cho phép click xuyên qua nếu cần */
+    transition: opacity 1.5s ease-out;
+}
+
+.year-container {
+    display: flex;
+    font-size: 12vw;
+    /* Giảm cỡ chữ xuống */
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 20px #fff, 0 0 50px #0ff;
+    position: relative;
+    /* Căn chỉnh vị trí để chừa chỗ cho số 6 chui vào */
+    transform: translateX(-3vw);
+}
+
+/* ... (keep old-five as is or updated if referenced) ... */
+
+/* Container bóng bay chứa số 6 */
+.balloon-container {
+    position: absolute;
+    bottom: -100vh;
+    left: calc(50% + 5vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: bottom 3s ease-out;
+}
+
+/* Bay lên vị trí khớp với dòng chữ */
+.balloon-container.float-up {
+    bottom: 35%;
+    /* Căn chỉnh lại độ cao vì layout thay đổi */
+}
+
+.balloon-body {
+    width: 10vw;
+    /* Giảm kích thước bóng */
+    height: 12vw;
+    background: radial-gradient(circle at 30% 30%, #ff5e5e, #d00000);
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.3), 5px 5px 15px rgba(255, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: wobble 3s ease-in-out infinite;
+    z-index: 2;
+}
+
+/* Cái dây bóng */
+.balloon-string {
+    width: 2px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.8);
+    margin-top: -2px;
+    z-index: 1;
+}
+
+/* Số 6 mới - Treo lủng lẳng bên dưới */
+.new-six {
+    /* Bỏ position absolute để nó nằm dưới theo flow */
+    font-size: 12vw;
+    /* To bằng chữ 202 */
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    line-height: 1;
+    margin-top: -10px;
+    /* Dính vào dây */
+    animation: swing 3s ease-in-out infinite alternate;
+}
+
+@keyframes swing {
+    from {
+        transform: rotate(-5deg);
+    }
+
+    to {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes wobble {
+
+    0%,
+    100% {
+        transform: rotate(-3deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+/* Ẩn toàn bộ intro sau khi xong */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
